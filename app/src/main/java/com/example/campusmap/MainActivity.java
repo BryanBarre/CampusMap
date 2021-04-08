@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setEtage(String etage) {
-        this.etage = etage;
+        MainActivity.etage = etage;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adminButton.setOnClickListener(v -> {
             System.out.println("admin step");
             System.gc();
-            startActivity(new Intent(MainActivity.this, AdminActivity.class));
+            startActivity(new Intent(MainActivity.this, EditorActivity.class));
         });
 
     }
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 AlertDialog dialog= builder.create();
                 setEtage(result.getContents());
                 //dialog.show();
-                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Intent MapActivity = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(MapActivity);
             }

@@ -34,7 +34,7 @@
             android:value="barcode" />
 
         <activity
-            android:name=".AdminActivity"
+            android:name=".EditorActivity"
             />
     </application>
 

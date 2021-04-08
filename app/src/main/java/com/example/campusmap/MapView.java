@@ -185,18 +185,17 @@ public class MapView extends View{
         return text;
     }
 
-    public String Astar(){
+    public void Astar(){
         System.gc();
         if(graph.vertex.size()==0)
-            return "You have not created a graph yet";
+            return;
         graph=freeGraph();
         if(graph.getV(stop_x, stop_y)==null)
-            return "You have not specified the destination node yet";
+            return;
         String text=graph.Astar(graph.getV(start_x, start_y), graph.getV(stop_x, stop_y));
         animationthread = new MapView.async();
         animationthread.execute();
         invalidate();
-        return text;
     }
 
     public class async extends AsyncTask<Void,Void,Void> {

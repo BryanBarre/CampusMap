@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 /**
  * Created by Bryan BARRE on 14/03/2021.
  */
-public class AdminActivity extends FragmentActivity {
+public class EditorActivity extends FragmentActivity {
     MapView map;
     float height;
     float width;
@@ -21,7 +21,7 @@ public class AdminActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         map = findViewById(R.id.map);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_editor);
         Button link = (Button)findViewById(R.id.buttonLink);
         Button addPoint = (Button)findViewById(R.id.buttonAddPoint);
         Button rdc = (Button)findViewById(R.id.rdc);

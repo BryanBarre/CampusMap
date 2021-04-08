@@ -16,7 +16,7 @@ import com.example.campusmap.Graph.Vertex;
 /**
  * Created by Bryan BARRE on 14/03/2021.
  */
-public class AdminView extends View {
+public class EditorView extends View {
 
     Graph graph=new Graph();
     String counter = "sans nom";
@@ -27,17 +27,17 @@ public class AdminView extends View {
     int edgeReady=0;//passe a 1 quand pret a calculer le trait (poids/taille)
     final int lesRayons=5;//taille du rayon des points
     final Paint paint = new Paint();
-    AdminView.async animationthread = new AdminView.async();
+    EditorView.async animationthread = new EditorView.async();
 
-    public AdminView(Context context){
+    public EditorView(Context context){
         super(context);
         init(null,0);
     }
-    public AdminView(Context context, AttributeSet attrs) {
+    public EditorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
-    public AdminView(Context context, AttributeSet attrs, int defStyle){
+    public EditorView(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -174,7 +174,7 @@ public class AdminView extends View {
             return "You have not specified the destination node yet";
 
         String text=graph.Dijkstra(graph.getV(start_x, start_y), graph.getV(stop_x, stop_y));//ky exe na duhet per statistika
-        animationthread = new AdminView.async();
+        animationthread = new EditorView.async();
         animationthread.execute();
         invalidate();
         return text;
@@ -188,7 +188,7 @@ public class AdminView extends View {
         if(graph.getV(stop_x, stop_y)==null)
             return "You have not specified the destination node yet";
         String text=graph.Astar(graph.getV(start_x, start_y), graph.getV(stop_x, stop_y));
-        animationthread = new AdminView.async();
+        animationthread = new EditorView.async();
         animationthread.execute();
         invalidate();
         return text;

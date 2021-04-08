@@ -7,6 +7,8 @@
     <string name="the_first_floor">the_first_floor</string>
     <string name="sparseButton">Sparse</string>
     <string name="gridButton">Grid</string>
+    <string name="scanner_le_qr_code">scanner le QR code</string>
+    <string name="admin">admin</string>
 
     <string-array name="FirstValue">
         <item>M.</item>
