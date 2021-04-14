@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureActivity;
@@ -38,9 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        final Button adminButton = (Button) findViewById(R.id.adminButton);
-        adminButton.setOnClickListener(v -> {
-            System.out.println("admin step");
+        final Button editorButton = (Button) findViewById(R.id.editorButton);
+        editorButton.setOnClickListener(v -> {
+            System.out.println("editor step");
             System.gc();
             startActivity(new Intent(MainActivity.this, EditorActivity.class));
         });

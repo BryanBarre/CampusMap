@@ -43,7 +43,7 @@ public class Graph {
 
     public Vertex getVname(String name){
         for(int i=0;i<vertex.size();i++) {
-            System.out.println("vertex.get(i)= "+vertex.get(i).id+" name= "+name);
+            //System.out.println("vertex.get(i)= "+vertex.get(i).id+" name= "+name);
             if (vertex.get(i).id.equals(name)) {
                 return vertex.get(i);
             }
@@ -54,7 +54,7 @@ public class Graph {
 
     public void linkedlist(){
         for(int i=0;i<vertex.size();i++){
-            System.out.print(vertex.get(i).id+": ");
+            //System.out.print(vertex.get(i).id+": ");
             for(int j=0;j<vertex.get(i).edges.size();j++){
                 System.out.print("=>"+vertex.get(i).edges.get(j).destination.id);
             }

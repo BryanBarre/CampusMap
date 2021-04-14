@@ -59,20 +59,21 @@ public class MapView extends View{
                 paint.setColor(Color.GREEN);
 
             canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
-
+/*
             paint.setColor(Color.BLACK);
             paint.setTextSize(testSize);
             canvas.drawText("" + v.id, (float) v.x, (float) v.y, paint);
-
+*/
             paint.setColor(Color.BLACK);
             for(int j=0;j<graph.vertex.get(i).edges.size();j++){
                 Vertex v1=graph.vertex.get(i);
                 Vertex v2=v1.edges.get(j).destination;
                 if(v1.edges.get(j).isPath==1)
-                    paint.setColor(Color.YELLOW);//couleur du chemin a prendre
-                else
-                    paint.setColor(Color.BLACK);//couleur des autres chemins
-
+                    paint.setColor(Color.GREEN);//couleur du chemin a prendre
+                else {
+                    //paint.setColor(Color.BLACK);//couleur des autres chemins
+                    paint.setColor(Color.TRANSPARENT);//couleur des autres chemins
+                }
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(8);
                 canvas.drawLine((float)v1.x,(float) v1.y,(float) v2.x,(float) v2.y, paint);
@@ -81,7 +82,7 @@ public class MapView extends View{
                 float ymes = (float) (v1.y+v2.y)/2;
                 paint.setTextSize(testSize);
                 paint.setStrokeWidth(1);
-                canvas.drawText("" + String.format( "%.2f", v1.edges.get(j).weight ), xmes, ymes+40/*qe ms shkruajme mbi vize*/, paint);
+                //canvas.drawText("" + String.format( "%.2f", v1.edges.get(j).weight ), xmes, ymes+40/*qe ms shkruajme mbi vize*/, paint);
 
             }
         }

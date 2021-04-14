@@ -121,7 +121,6 @@ public class MapActivity extends AppCompatActivity {
                 }
                 String numSalle = (batiment.getSelectedItem().toString() + etage.getSelectedItem().toString() + salle.getSelectedItem().toString());
                 resultat.setText("salle recherché " + numSalle);
-                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++"+numSalle);
                 map.setStop(numSalle);
                 map.Astar();
 
@@ -171,14 +170,12 @@ public class MapActivity extends AppCompatActivity {
         int cpt=0;
         height=map.getHeight();
         width=map.getWidth();
-        System.out.println("-----------------------"+height+"---"+width);
         try {
             while (true){
                 x = Float.parseFloat(pointX[cpt]) * (width / 864);
                 y = Float.parseFloat(pointY[cpt]) * (height / 864);
                 name = pointName[cpt];
                 map.graph.addVertex(name, x, y);
-                System.out.println("point: X=" + pointX[cpt] + " Y= " + pointY[cpt] + " name= " + pointName[cpt]);
                 cpt++;
             }
         }catch (ArrayIndexOutOfBoundsException e){

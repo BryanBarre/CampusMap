@@ -16,7 +16,7 @@
         android:layout_centerInParent="true"
         android:padding="20dp"
         android:text="@string/scanner_le_qr_code"
-        android:textSize="30dp" />
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -28,11 +28,11 @@
         app:srcCompat="@drawable/ufrmap" />
 
     <Button
-        android:id="@+id/adminButton"
+        android:id="@+id/editorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/admin"
+        android:text="@string/editeur"
         android:textSize="30sp" />
 
 </RelativeLayout>

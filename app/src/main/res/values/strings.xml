@@ -9,6 +9,7 @@
     <string name="gridButton">Grid</string>
     <string name="scanner_le_qr_code">scanner le QR code</string>
     <string name="admin">admin</string>
+    <string name="editeur">Editeur</string>
 
     <string-array name="FirstValue">
         <item>M.</item>
