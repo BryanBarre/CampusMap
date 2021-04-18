@@ -33,9 +33,6 @@
             android:name="com.google.android.gms.vision.barcode"
             android:value="barcode" />
 
-        <activity
-            android:name=".EditorActivity"
-            />
     </application>
 
 </manifest>

@@ -19,10 +19,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button scanBtn;
     public static String etage= "aucun";
 
-    public String getEtage() {
-        return etage;
-    }
-
     public void setEtage(String etage) {
         MainActivity.etage = etage;
     }
@@ -31,18 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         scanBtn = findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(this);
-
-
-
-        final Button editorButton = (Button) findViewById(R.id.editorButton);
-        editorButton.setOnClickListener(v -> {
-            System.out.println("editor step");
-            System.gc();
-            startActivity(new Intent(MainActivity.this, EditorActivity.class));
-        });
 
     }
 

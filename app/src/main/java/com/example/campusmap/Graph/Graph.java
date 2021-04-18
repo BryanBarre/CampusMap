@@ -62,65 +62,6 @@ public class Graph {
         }
     }
 
-    public String Dijkstra(Vertex start,Vertex destination){
-        String text="Alg: Dijkstra "; //do te mbajme ketu rezultatet e perpunimeve
-        //Initialization
-        // d[start]=0 (other vertex's d_value is infinity by default), S={0} , Q = vertex
-        long startTime = System.nanoTime();
-        LinkedList<Vertex> set = new LinkedList<>();
-        PriorityQueue<Vertex> queue = new PriorityQueue<>();
-        queue.add(start);
-        start.d_value=0;
-
-        //cycle until queue is empty or destination has been inserted into s
-        while(!queue.isEmpty()){
-
-            Vertex extracted = queue.poll();
-            Objects.requireNonNull(extracted).discovered=true;//kur eshte ne set dhe tashme d_value eshte percaktuar
-            set.add(extracted);
-            if(extracted==destination){
-                break;
-            }
-
-
-            //for each vertex into dhe adj list of extracted -> relax.
-            for(int i=0;i<extracted.edges.size();i++){
-                //edge examined
-                Edge edge = extracted.edges.get(i);
-                //get neighbor vertex and relax
-                Vertex neighbor = edge.destination;
-                if(!neighbor.discovered){
-                    //Relaxation
-                    if(neighbor.d_value>extracted.d_value+edge.weight){
-                        neighbor.d_value=extracted.d_value+edge.weight;
-                        neighbor.parent=extracted;
-                        //insert neighbors in queue so we can choose dhe min one
-                        queue.remove(neighbor);
-                        queue.add(neighbor);
-                    }
-                }//if discovered
-
-            }
-        }
-        long stopTime = System.nanoTime();
-        if(destination.parent==null)
-            text="This path does not exist";
-        else{
-
-            text+=" Vertex ne set: "+set.size();
-            //Dijkstra process finished, now we will take our path and print it
-            Stack<Vertex> stack = new Stack<>();
-            Vertex current = destination;
-            while(current!=null){
-                stack.push(current);
-                current = current.parent;
-            }
-            double path_length = destination.d_value;
-
-            text+=" Nr.Hops:"+(stack.size()-1)+" Path length: "+String.format( "%.2f", path_length )+" Time: "+(stopTime-startTime)+" ns";
-        }//fund else per ekzistencen e path
-        return text;
-    }
     public String Astar(Vertex start,Vertex destination){
         String text="Alg: A*(A star) ";
         //Initialization
@@ -142,7 +83,6 @@ public class Graph {
             if(extracted==destination){
                 break;
             }
-
 
             //for each vertex into dhe adj list of extracted -> relax.
             for(int i=0;i<extracted.edges.size();i++){
@@ -188,7 +128,7 @@ public class Graph {
         return text;
     }
     public void heuristic(Vertex v,Vertex destination){
-        //distance heuklidiane
+        //distance euclidienne
         v.h_value=Math.sqrt((v.x-destination.x)*(v.x-destination.x)+
                 (v.y-destination.y)*(v.y-destination.y));
     }

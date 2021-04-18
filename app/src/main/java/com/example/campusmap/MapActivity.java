@@ -1,32 +1,16 @@
 package com.example.campusmap;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Constraints;
 
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Sampler;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.campusmap.Graph.Vertex;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.io.EOFException;
-import java.io.IOException;
-import java.util.jar.Attributes;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import com.thuytrinh.android.collageviews.MultiTouchListener;
 
 public class MapActivity extends AppCompatActivity {
     MapView map;
@@ -55,7 +39,7 @@ public class MapActivity extends AppCompatActivity {
 
         map = (MapView) findViewById(R.id.map);
 
-
+        findViewById(R.id.map).setOnTouchListener((View.OnTouchListener) new MultiTouchListener());//permet de zoomer et deplacer la carte
         switch (QrCode) {
             case "Rdc_Code1"://positioner les case comme cela equivaut a if(x || y)
             case "Rdc_Code2":
@@ -75,8 +59,6 @@ public class MapActivity extends AppCompatActivity {
             case "Etage2_Code3":
                 map.setBackgroundResource(R.drawable.etage2);
                 break;
-
-
         }
 
         astar.setOnClickListener(new View.OnClickListener() {

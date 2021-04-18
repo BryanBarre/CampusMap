@@ -57,7 +57,8 @@ public class MapView extends View{
                 paint.setColor(Color.RED);
             if(v.x==stop_x&&v.y==stop_y)
                 paint.setColor(Color.GREEN);
-
+            else
+                paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
             canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
 /*
             paint.setColor(Color.BLACK);
@@ -169,21 +170,6 @@ public class MapView extends View{
             }
         }
         return graph;
-    }
-
-    public String Dijkstra(){
-        System.gc();
-        if(graph.vertex.size()==0)
-            return "You have not created a graph yet";
-        graph = freeGraph();
-        if(graph.getV(stop_x, stop_y)==null)
-            return "You have not specified the destination node yet";
-
-        String text=graph.Dijkstra(graph.getV(start_x, start_y), graph.getV(stop_x, stop_y));//ky exe na duhet per statistika
-        animationthread = new MapView.async();
-        animationthread.execute();
-        invalidate();
-        return text;
     }
 
     public void Astar(){

@@ -4,6 +4,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -26,14 +27,6 @@
         android:layout_marginBottom="34dp"
         android:padding="20dp"
         app:srcCompat="@drawable/ufrmap" />
-
-    <Button
-        android:id="@+id/editorButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/editeur"
-        android:textSize="30sp" />
 
 </RelativeLayout>
 

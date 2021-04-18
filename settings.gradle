@@ -1,2 +1,4 @@
+include ':demo'
+include ':libraries:collage-views'
 include ':app'
 rootProject.name = "CampusMap"

@@ -12,17 +12,17 @@
     <string name="editeur">Editeur</string>
 
     <string-array name="FirstValue">
-        <item>M.</item>
-        <item>U1.</item>
+        <!--<item>M.</item>
+        <item>U1.</item>-->
         <item>U2.</item>
 
     </string-array>
 
     <string-array name="SecondValue">
-        <item>0.</item>
+        <!--<item>0.</item>-->
         <item>1.</item>
-        <item>2.</item>
-        <item>3.</item>
+        <!--<item>2.</item>
+        <item>3.</item>-->
     </string-array>
 
     <string-array name="ThirdValue">
