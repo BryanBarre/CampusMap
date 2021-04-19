@@ -1,9 +1,14 @@
 package com.example.campusmap;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,6 +24,7 @@ import com.example.campusmap.Graph.Vertex;
 public class MapView extends View{
 
     Graph graph=new Graph();
+    Bitmap depart = BitmapFactory.decodeResource(getResources(), R.drawable.ufrmap);
     int buttonClicked=0; //1-start 2-stop 3-vertex 4-edge 5-edgeStart 6-edgeStop
     String counter = "sans nom";
     float start_x,start_y;
@@ -26,7 +32,7 @@ public class MapView extends View{
     float testSize=20;
     Vertex edgeStart,edgeStop;//emplacement ou l'on stock depart et arrivé pour tracer un trait
     int edgeReady=0;//passe a 1 quand pret a calculer le trait (poids/taille)
-    final int lesRayons=5;//taille du rayon des points
+    final int lesRayons=15;//taille du rayon des points
     final Paint paint = new Paint();
     MapView.async animationthread = new MapView.async();
 
@@ -53,14 +59,16 @@ public class MapView extends View{
         for(int i=0;i<graph.vertex.size();i++){
             paint.setStyle(Paint.Style.FILL);
             Vertex v = graph.vertex.get(i);
-            if(v.x==start_x&&v.y==start_y)
+            if(v.x==start_x&&v.y==start_y){
+                canvas.drawBitmap(depart, (float) v.x, (float) v.y, null); // 24 is the height of image
                 paint.setColor(Color.RED);
-            if(v.x==stop_x&&v.y==stop_y)
+            }
+            else if(v.x==stop_x&&v.y==stop_y)
                 paint.setColor(Color.GREEN);
             else
                 paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
-            canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
-/*
+            //canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
+            /*
             paint.setColor(Color.BLACK);
             paint.setTextSize(testSize);
             canvas.drawText("" + v.id, (float) v.x, (float) v.y, paint);
