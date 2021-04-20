@@ -24,7 +24,7 @@ import com.example.campusmap.Graph.Vertex;
 public class MapView extends View{
 
     Graph graph=new Graph();
-    Bitmap depart = BitmapFactory.decodeResource(getResources(), R.drawable.ufrmap);
+    //Bitmap depart = BitmapFactory.decodeResource(getResources(), R.drawable.mappoint);
     int buttonClicked=0; //1-start 2-stop 3-vertex 4-edge 5-edgeStart 6-edgeStop
     String counter = "sans nom";
     float start_x,start_y;
@@ -60,14 +60,15 @@ public class MapView extends View{
             paint.setStyle(Paint.Style.FILL);
             Vertex v = graph.vertex.get(i);
             if(v.x==start_x&&v.y==start_y){
-                canvas.drawBitmap(depart, (float) v.x, (float) v.y, null); // 24 is the height of image
+                //canvas.drawBitmap(depart, (float) v.x-30, (float) v.y-30, null); // on affiche l'image
                 paint.setColor(Color.RED);
             }
-            else if(v.x==stop_x&&v.y==stop_y)
+            else if(v.x==stop_x&&v.y==stop_y){
                 paint.setColor(Color.GREEN);
-            else
+            }
+            else {
                 paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
-            //canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
+            }//canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
             /*
             paint.setColor(Color.BLACK);
             paint.setTextSize(testSize);

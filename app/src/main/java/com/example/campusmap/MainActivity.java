@@ -16,8 +16,8 @@ import com.journeyapps.barcodescanner.CaptureActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button scanBtn;
-    public static String etage= "aucun";
+    Button scanBtn;//le bouton lancant le scan
+    public static String etage= "aucun";//la valeur de l'etage scanné
 
     public void setEtage(String etage) {
         MainActivity.etage = etage;
@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         scanBtn = findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(this);
-
     }
 
     @Override

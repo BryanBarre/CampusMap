@@ -15,8 +15,10 @@
         android:roundIcon="@mipmap/ic_launcherufrmap_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusMap">
-        <activity android:name=".MapActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MapActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
