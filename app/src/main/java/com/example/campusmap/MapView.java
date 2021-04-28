@@ -81,7 +81,7 @@ public class MapView extends View{
                 if(v1.edges.get(j).isPath==1)
                     paint.setColor(Color.GREEN);//couleur du chemin a prendre
                 else {
-                    //paint.setColor(Color.BLACK);//couleur des autres chemins
+                    //paint.setColor(Color.BLACK);
                     paint.setColor(Color.TRANSPARENT);//couleur des autres chemins
                 }
                 paint.setStyle(Paint.Style.STROKE);
@@ -102,7 +102,6 @@ public class MapView extends View{
         Vertex v = graph.getVname(name);
         start_x = (float)v.x;
         start_y = (float)v.y;
-        //buttonClicked = 0;
         invalidate();
     }
 
@@ -111,60 +110,12 @@ public class MapView extends View{
             Vertex v = graph.getVname(name);
             stop_x = (float) v.x;
             stop_y = (float) v.y;
-            //buttonClicked = 0;
             invalidate();
         }catch (NullPointerException e){
             System.out.println("Salle introuvable");
         }
     }
 
-    void setNodes(float x, float y){
-        if(kontrollPike(x, y)) {
-            graph.addVertex(counter, x, y);
-            buttonClicked = 0;
-            invalidate();
-        }
-    }
-
-    void setEdgeStart(Vertex v){
-        if(v!=null) {
-            edgeStart = v;
-        }
-    }
-    void setEdgeStop(Vertex v){
-        if(v!=null) {
-            edgeStop = v;
-            edgeReady = 1;
-
-            graph.addEdge(edgeStart, edgeStop, 1);
-            edgeReady = 0;
-            buttonClicked = 0;
-            invalidate();
-        }
-    }
-
-
-    //vérifier si le point x, y coupe un sommet
-    public boolean kontrollPike(float x,float y){
-        for(int i=0;i<graph.vertex.size();i++){
-            Vertex v= graph.vertex.get(i);
-            double d = Math.sqrt((x - v.x) * (x - v.x)+(y-v.y)*(y-v.y));//distance de deux centres
-            if(d<2*lesRayons)
-                return false;//les cercles se croisent
-        }
-        return true;
-
-    }
-    public Vertex getVertex(float x,float y){
-        for(int i=0;i<graph.vertex.size();i++){
-            Vertex v= graph.vertex.get(i);
-            double d = Math.sqrt((x - v.x) * (x - v.x)+(y-v.y)*(y-v.y));//distance entre le centre du sommet et le point
-            if(d<=lesRayons)
-                return v;//c'est-à-dire que le point est dans le cercle
-        }
-        return null;
-
-    }
     public Graph freeGraph(){
         //graphique sans notes précédentes alg
         for(int i=0;i<graph.vertex.size();i++){
@@ -211,7 +162,6 @@ public class MapView extends View{
                     Edge current_edge=current.edges.get(i);
                     if(current_edge.destination==parent) {
                         current_edge.isPath = 1;
-                        //duhet bere dhe edge i anasjellte 1
                         for(int j=0;j<parent.edges.size();j++) {
                             if (parent.edges.get(j).destination == current) {
                                 parent.edges.get(j).isPath = 1;

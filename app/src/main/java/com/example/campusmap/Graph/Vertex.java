@@ -7,12 +7,9 @@ public class  Vertex implements Comparable<Vertex>{
     public Vertex parent=null;
     public double d_value=Double.POSITIVE_INFINITY;
     public final LinkedList<Edge> edges= new LinkedList<>();
-    public boolean discovered = false;//discovered true dmth qe vertex eshte ne SET (Dijkstra) dhe ne CLOSED (per a*)
-    //koordinata per grid
+    public boolean discovered = false;
     public double x,y;
-    //Vlera heuristike
     public double h_value=0;
-    //Total weight
     public double f_value=Double.POSITIVE_INFINITY;//(f_value=d_value+h_value)
 
     public Vertex(String id){
