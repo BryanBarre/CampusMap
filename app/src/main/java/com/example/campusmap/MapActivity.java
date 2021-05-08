@@ -36,13 +36,65 @@ public class MapActivity extends AppCompatActivity {
 
 
         final TextView resultat = (TextView) findViewById(R.id.resultat);
-        Button astar = (Button) findViewById(R.id.astar);
+        Button astarBtn = (Button) findViewById(R.id.astar);
 
         map = (MapView) findViewById(R.id.map);
-
+        map.setBackgroundResource(R.drawable.etage1);
+        switch (QrCode) {
+            case "Rdc_Code1":
+                map.setBackgroundResource(R.drawable.rdc);
+                initializePoint("RDC");
+                map.setStart("depart_0.1");
+                constraintMap.setRotation(90);//suposé faire une rotation de la carte
+                break;
+            case "Rdc_Code2":
+                map.setBackgroundResource(R.drawable.rdc);
+                initializePoint("RDC");
+                map.setStart("depart_0.2");
+                break;
+            case "Rdc_Code3":
+                map.setBackgroundResource(R.drawable.rdc);
+                initializePoint("RDC");
+                map.setStart("depart_0.3");
+                break;
+            case "Etage1_Code1":
+                map.setBackgroundResource(R.drawable.etage1);
+                initializePoint("ET1");
+                map.setStart("depart_1.1");
+                break;
+            case "Etage1_Code2":
+                map.setBackgroundResource(R.drawable.etage1code2);
+                initializePoint("ET1");
+                map.setStart("depart_1.2");
+                break;
+            case "Etage1_Code3":
+                map.setBackgroundResource(R.drawable.etage1);
+                initializePoint("ET1");
+                map.setStart("depart_1.3");
+                break;
+            case "Etage2_Code1":
+                map.setBackgroundResource(R.drawable.etage2);
+                initializePoint("ET2");
+                map.setStart("depart_2.1");
+                break;
+            case "Etage2_Code2":
+                map.setBackgroundResource(R.drawable.etage2);
+                initializePoint("ET2");
+                map.setStart("depart_2.2");
+                break;
+            case "Etage2_Code3":
+                map.setBackgroundResource(R.drawable.etage2);
+                initializePoint("ET2");
+                map.setStart("depart_2.3");
+                break;
+        }
+        String numSalle = ("depart_1.1");
+        resultat.setText("salle recherché " + numSalle);
+        map.setStop(numSalle);
+        map.Astar();
         findViewById(R.id.map).setOnTouchListener((View.OnTouchListener) new MultiTouchListener());//permet de zoomer et deplacer la carte
 
-        astar.setOnClickListener(new View.OnClickListener() {
+        astarBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switch (QrCode) {
                     case "Rdc_Code1":

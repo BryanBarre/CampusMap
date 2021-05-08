@@ -68,7 +68,8 @@ public class MapView extends View{
             }
             else {
                 paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
-            }//canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
+            }
+            canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
             /*
             paint.setColor(Color.BLACK);
             paint.setTextSize(testSize);
