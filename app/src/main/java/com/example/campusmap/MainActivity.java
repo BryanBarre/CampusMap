@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void scanCode(){
         IntentIntegrator integrator = new IntentIntegrator(this);
+
         integrator.setCaptureActivity(CaptureActivity.class);
         integrator.setOrientationLocked(false);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);

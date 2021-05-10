@@ -65,12 +65,9 @@ public class Graph {
             }
 
             for(int i=0;i<extracted.edges.size();i++){
-                //edge examined
                 Edge edge = extracted.edges.get(i);
-                //get neighbor vertex and relax
                 Vertex neighbor = edge.destination;
                 if(!neighbor.discovered){
-                    //Relaxation
                     heuristic(neighbor,destination);
                     if(neighbor.f_value>extracted.f_value+edge.weight){
                         neighbor.d_value=extracted.d_value+edge.weight;
@@ -92,7 +89,7 @@ public class Graph {
             text+=" Vertex ne CLOSED: "+CLOSED.size();
             System.out.println();
 
-            //Dijkstra process finished, now we will take our path and print it
+            //Astar process finished, now we will take our path and print it
             Stack<Vertex> stack = new Stack<>();
             Vertex current = destination;
             while(current!=null){

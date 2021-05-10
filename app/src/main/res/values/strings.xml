@@ -10,6 +10,11 @@
     <string name="scanner_le_qr_code">scanner le QR code</string>
     <string name="admin">admin</string>
     <string name="editeur">Editeur</string>
+    <string name="start">Start</string>
+    <string name="arrive">&#128309; arrivée</string>
+    <string name="ici">&#128308; vous êtes ici</string>
+    <string name="introuvable">Salle introuvable</string>
+    <string name="salle">salle recherchée %1$s</string>
 
     <string-array name="FirstValue">
         <!--<item>M.</item>

@@ -1,14 +1,9 @@
 package com.example.campusmap;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PictureDrawable;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
@@ -24,14 +19,9 @@ import com.example.campusmap.Graph.Vertex;
 public class MapView extends View{
 
     Graph graph=new Graph();
-    //Bitmap depart = BitmapFactory.decodeResource(getResources(), R.drawable.mappoint);
-    int buttonClicked=0; //1-start 2-stop 3-vertex 4-edge 5-edgeStart 6-edgeStop
-    String counter = "sans nom";
     float start_x,start_y;
     float stop_x,stop_y;
     float testSize=20;
-    Vertex edgeStart,edgeStop;//emplacement ou l'on stock depart et arrivé pour tracer un trait
-    int edgeReady=0;//passe a 1 quand pret a calculer le trait (poids/taille)
     final int lesRayons=15;//taille du rayon des points
     final Paint paint = new Paint();
     MapView.async animationthread = new MapView.async();
@@ -50,31 +40,14 @@ public class MapView extends View{
     }
     public void init(AttributeSet attrs,int defStyle){
         paint.setColor(Color.BLACK);
-        //paint.setAntiAlias(true);
+        paint.setAntiAlias(true);
     }
 
     //onDraw est appelé au moment de dessiner les points (taille des noeuds , couleurs,etc)
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for(int i=0;i<graph.vertex.size();i++){
-            paint.setStyle(Paint.Style.FILL);
-            Vertex v = graph.vertex.get(i);
-            if(v.x==start_x&&v.y==start_y){
-                //canvas.drawBitmap(depart, (float) v.x-30, (float) v.y-30, null); // on affiche l'image
-                paint.setColor(Color.RED);
-            }
-            else if(v.x==stop_x&&v.y==stop_y){
-                paint.setColor(Color.GREEN);
-            }
-            else {
-                paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
-            }
-            canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);
-            /*
-            paint.setColor(Color.BLACK);
-            paint.setTextSize(testSize);
-            canvas.drawText("" + v.id, (float) v.x, (float) v.y, paint);
-*/
+
             paint.setColor(Color.BLACK);
             for(int j=0;j<graph.vertex.get(i).edges.size();j++){
                 Vertex v1=graph.vertex.get(i);
@@ -87,16 +60,27 @@ public class MapView extends View{
                 }
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(8);
+                paint.setStrokeCap(Paint.Cap.ROUND);
                 canvas.drawLine((float)v1.x,(float) v1.y,(float) v2.x,(float) v2.y, paint);
                 paint.setColor(Color.BLACK);
-                float xmes = (float) (v1.x+v2.x)/2;
-                float ymes = (float) (v1.y+v2.y)/2;
                 paint.setTextSize(testSize);
                 paint.setStrokeWidth(1);
-                //canvas.drawText("" + String.format( "%.2f", v1.edges.get(j).weight ), xmes, ymes+40/*qe ms shkruajme mbi vize*/, paint);
 
             }
         }
+        for(int i=0;i<graph.vertex.size();i++){
+            paint.setStyle(Paint.Style.FILL);
+            Vertex v = graph.vertex.get(i);
+            if(v.x==start_x&&v.y==start_y){
+                paint.setColor(Color.RED);
+            }
+            else if(v.x==stop_x&&v.y==stop_y){
+                paint.setColor(Color.BLUE);
+            }
+            else {
+                paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
+            }
+            canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);}
     }
 
     public void setStart(String name){
@@ -113,12 +97,11 @@ public class MapView extends View{
             stop_y = (float) v.y;
             invalidate();
         }catch (NullPointerException e){
-            System.out.println("Salle introuvable");
+            System.out.println(getContext().getString(R.string.introuvable));
         }
     }
 
     public Graph freeGraph(){
-        //graphique sans notes précédentes alg
         for(int i=0;i<graph.vertex.size();i++){
             Vertex current = graph.vertex.get(i);
             current.parent=null;
