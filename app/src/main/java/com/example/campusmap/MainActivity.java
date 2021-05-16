@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void scanCode(){
         IntentIntegrator integrator = new IntentIntegrator(this);
-
         integrator.setCaptureActivity(CaptureActivity.class);
         integrator.setOrientationLocked(false);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
@@ -57,13 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         scanCode();
-                    }
-                }).setNegativeButton("finit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
+                   }
+                }).setNegativeButton("finit", (dialog, which) -> finish());
                 AlertDialog dialog= builder.create();
                 setEtage(result.getContents());
                 //dialog.show();

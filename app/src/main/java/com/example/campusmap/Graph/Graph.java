@@ -52,18 +52,13 @@ public class Graph {
         start.d_value=0;
         start.f_value=0;
         OPEN.add(start);
-
-
-        //cycle until queue is empty or destination has been inserted into s
         while(!OPEN.isEmpty()){
-
             Vertex extracted = OPEN.poll();
             Objects.requireNonNull(extracted).discovered=true;//lorsqu'il est en CLOSED et que f_value est déjà spécifié
             CLOSED.add(extracted);
             if(extracted==destination){
                 break;
             }
-
             for(int i=0;i<extracted.edges.size();i++){
                 Edge edge = extracted.edges.get(i);
                 Vertex neighbor = edge.destination;
@@ -78,17 +73,14 @@ public class Graph {
                         OPEN.add(neighbor);
                     }
                 }
-
             }
         }
         long stopTime = System.nanoTime();
-
         if(destination.parent==null)
             text="This path does not exist";
         else{
             text+=" Vertex ne CLOSED: "+CLOSED.size();
             System.out.println();
-
             //Astar process finished, now we will take our path and print it
             Stack<Vertex> stack = new Stack<>();
             Vertex current = destination;
@@ -102,6 +94,7 @@ public class Graph {
         }
         return text;
     }
+
     public void heuristic(Vertex v,Vertex destination){
         //distance euclidienne
         v.h_value=Math.sqrt((v.x-destination.x)*(v.x-destination.x)+

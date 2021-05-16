@@ -12,9 +12,6 @@ public class  Vertex implements Comparable<Vertex>{
     public double h_value=0;
     public double f_value=Double.POSITIVE_INFINITY;//(f_value=d_value+h_value)
 
-    public Vertex(String id){
-        this.id=id;
-    }
     public Vertex(String id,double x,double y){
         this.id=id;
         this.x=x;
@@ -25,9 +22,5 @@ public class  Vertex implements Comparable<Vertex>{
     public int compareTo(Vertex o) {
         return Double.compare(this.d_value,o.d_value);
     }
-
-
-
-
 }
 

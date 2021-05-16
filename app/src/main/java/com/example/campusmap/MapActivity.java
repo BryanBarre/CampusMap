@@ -1,15 +1,19 @@
 package com.example.campusmap;
 
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Layout;
+import android.os.Handler;
+import android.os.PersistableBundle;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.thuytrinh.android.collageviews.MultiTouchListener;
@@ -19,7 +23,7 @@ public class MapActivity extends AppCompatActivity {
     //taille de map
     float height;
     float width;
-
+    Canvas canvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +40,18 @@ public class MapActivity extends AppCompatActivity {
         Spinner etage = (Spinner) findViewById(R.id.etage);
         Spinner salle = (Spinner) findViewById(R.id.salle);
 
-        LinearLayout textLayout =findViewById(R.id.textlayout);
+        LinearLayout textLayout = findViewById(R.id.textlayout);
 
         final TextView resultat = (TextView) findViewById(R.id.resultat);
         Button astarBtn = (Button) findViewById(R.id.astar);
 
         map = (MapView) findViewById(R.id.map);
 
-        findViewById(R.id.map).setOnTouchListener((View.OnTouchListener) new MultiTouchListener());//permet de zoomer et deplacer la carte
+        findViewById(R.id.map).setOnTouchListener((View.OnTouchListener)
+                new MultiTouchListener());
 
         switch (QrCode) {
-            case "Rdc_Code1"://positioner les case comme cela equivaut a if(x || y)
+            case "Rdc_Code1":
             case "Rdc_Code2":
             case "Rdc_Code3":
                 map.setBackgroundResource(R.drawable.rdc);
@@ -56,7 +61,6 @@ public class MapActivity extends AppCompatActivity {
             case "Etage1_Code2":
             case "Etage1_Code3":
                 map.setBackgroundResource(R.drawable.etage1);
-
                 break;
 
             case "Etage2_Code1":
@@ -64,61 +68,24 @@ public class MapActivity extends AppCompatActivity {
             case "Etage2_Code3":
                 map.setBackgroundResource(R.drawable.etage2);
                 break;
-
-
         }
-        astarBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                textLayout.setVisibility(View.VISIBLE);
-                switch (QrCode) {
-                    case "Rdc_Code1":
-                        initializePoint("RDC");
-                        map.setStart("depart_0.1");
-                        constraintMap.setRotation(90);//fait une rotation de la carte
-                        break;
-                    case "Rdc_Code2":
-                        initializePoint("RDC");
-                        map.setStart("depart_0.2");
-                        break;
-                    case "Rdc_Code3":
-                        initializePoint("RDC");
-                        map.setStart("depart_0.3");
-                        break;
-                    case "Etage1_Code1":
-                        initializePoint("ET1");
-                        map.setStart("depart_1.1");
-                        break;
-                    case "Etage1_Code2":
-                        initializePoint("ET1");
-                        map.setStart("depart_1.2");
-                        break;
-                    case "Etage1_Code3":
-                        initializePoint("ET1");
-                        map.setStart("depart_1.3");
-                        break;
-                    case "Etage2_Code1":
-                        initializePoint("ET2");
-                        map.setStart("depart_2.1");
-                        break;
-                    case "Etage2_Code2":
-                        initializePoint("ET2");
-                        map.setStart("depart_2.2");
-                        break;
-                    case "Etage2_Code3":
-                        initializePoint("ET2");
-                        map.setStart("depart_2.3");
-                        break;
-                }
-                String numSalle = (batiment.getSelectedItem().toString() + etage.getSelectedItem().toString() + salle.getSelectedItem().toString());
-                resultat.setText(getString(R.string.salle, numSalle));
-                map.setStop(numSalle);
-                map.Astar();
 
-                //String text = map.Astar();
-                //resultat.setText(text);
-            }
+        astarBtn.setOnClickListener(view -> {
+            drawMap();
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                drawDepart();
+            }
+        }, 500);
+    }
+
 
     @Override
     protected void onStop() {
@@ -127,60 +94,145 @@ public class MapActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    public void initializePoint(String etage){
+    public void drawMap(){
+        String QrCode = MainActivity.etage;
+        Spinner batiment = (Spinner) findViewById(R.id.batiment);
+        Spinner etage = (Spinner) findViewById(R.id.etage);
+        Spinner salle = (Spinner) findViewById(R.id.salle);
+
+        switch (QrCode) {
+            case "Rdc_Code1":
+                initializePoint("RDC");
+                map.setStart("depart_0.1");
+                break;
+            case "Rdc_Code2":
+                initializePoint("RDC");
+                map.setStart("depart_0.2");
+                break;
+            case "Rdc_Code3":
+                initializePoint("RDC");
+                map.setStart("depart_0.3");
+                break;
+            case "Etage1_Code1":
+                initializePoint("ET1");
+                map.setStart("depart_1.1");
+                break;
+            case "Etage1_Code2":
+                initializePoint("ET1");
+                map.setStart("depart_1.2");
+                break;
+            case "Etage1_Code3":
+                initializePoint("ET1");
+                map.setStart("depart_1.3");
+                break;
+            case "Etage2_Code1":
+                initializePoint("ET2");
+                map.setStart("depart_2.1");
+                break;
+            case "Etage2_Code2":
+                initializePoint("ET2");
+                map.setStart("depart_2.2");
+                break;
+            case "Etage2_Code3":
+                initializePoint("ET2");
+                map.setStart("depart_2.3");
+                break;
+        }
+        String numSalle = (batiment.getSelectedItem().toString() + etage.getSelectedItem().toString() + salle.getSelectedItem().toString());
+        map.setStop(numSalle);
+        map.Astar();//trace le trajet
+
+    }
+    public void drawDepart(){
+        String QrCode = MainActivity.etage;
+
+        switch (QrCode) {
+            case "Rdc_Code1":
+                initializePoint("RDC");
+                map.setStart("depart_0.1");
+                break;
+            case "Rdc_Code2":
+                initializePoint("RDC");
+                map.setStart("depart_0.2");
+                break;
+            case "Rdc_Code3":
+                initializePoint("RDC");
+                map.setStart("depart_0.3");
+                break;
+            case "Etage1_Code1":
+                initializePoint("ET1");
+                map.setStart("depart_1.1");
+                break;
+            case "Etage1_Code2":
+                initializePoint("ET1");
+                map.setStart("depart_1.2");
+                break;
+            case "Etage1_Code3":
+                initializePoint("ET1");
+                map.setStart("depart_1.3");
+                break;
+            case "Etage2_Code1":
+                initializePoint("ET2");
+                map.setStart("depart_2.1");
+                break;
+            case "Etage2_Code2":
+                initializePoint("ET2");
+                map.setStart("depart_2.2");
+                break;
+            case "Etage2_Code3":
+                initializePoint("ET2");
+                map.setStart("depart_2.3");
+                break;
+        }
+        map.Astar();//trace le trajet
+
+        //String text = map.Astar();
+        //resultat.setText(text);
+    }
+
+    public void initializePoint(String etage) {
+        float x, y;
+        String name;
+        height = map.getHeight();
+        width = map.getWidth();
         Resources res = getResources();
         map.graph.clear();
-        String[] pointX;
-        String[] pointY;
-        String[] pointName;
-        String[] link;
+        String[] pointX, pointY, pointName, link;
+        //récuperer points du RDC
         if (etage.equals("RDC")) {
             pointX = res.getStringArray(R.array.RDCpointsX);
             pointY = res.getStringArray(R.array.RDCpointsY);
             pointName = res.getStringArray(R.array.RDCname);
-            link=res.getStringArray(R.array.RDClink);
+            link = res.getStringArray(R.array.RDClink);
         }
-        else if (etage.equals("ET1")){
+        //récuperer points de l'etage 1
+        else if (etage.equals("ET1")) {
             pointX = res.getStringArray(R.array.ET1pointsX);
             pointY = res.getStringArray(R.array.ET1pointsY);
             pointName = res.getStringArray(R.array.ET1name);
-            link=res.getStringArray(R.array.ET1link);
+            link = res.getStringArray(R.array.ET1link);
 
         }
-        else{
+        //récuperer points de l'etage 2
+        else {
             pointX = res.getStringArray(R.array.ET2pointsX);
             pointY = res.getStringArray(R.array.ET2pointsY);
             pointName = res.getStringArray(R.array.ET2name);
-            link=res.getStringArray(R.array.ET2link);
+            link = res.getStringArray(R.array.ET2link);
+        }
+//scrute le fichier xml et ajoute les points
+        for (int cpt = 0; cpt < pointX.length; cpt++) {
+            x = Float.parseFloat(pointX[cpt]) * (width / 864);
+            y = Float.parseFloat(pointY[cpt]) * (height / 864);
+            name = pointName[cpt];
+            map.graph.addVertex(name, x, y);
+        }
+//scrute le fichier xml et ajoute les liaisons entre points
+        for (int cpt = 0; cpt < link.length; cpt += 2) {
+            map.graph.addEdge(link[cpt], link[cpt + 1]);
         }
 
-        float x;
-        float y;
-        String name;
-        int cpt=0;
-        height=map.getHeight();
-        width=map.getWidth();
-        try {
-            while (true){
-                x = Float.parseFloat(pointX[cpt]) * (width / 864);
-                y = Float.parseFloat(pointY[cpt]) * (height / 864);
-                name = pointName[cpt];
-                map.graph.addVertex(name, x, y);
-                cpt++;
-            }
-        }catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("fin de fichier: "+e);
-        }
-
-        try {
-            cpt=0;
-            while (true){
-                map.graph.addEdge(link[cpt],link[cpt+1]);
-                cpt=cpt+2;
-            }
-        }catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("fin de fichier: "+e);
-        }
     }
+
 }
 

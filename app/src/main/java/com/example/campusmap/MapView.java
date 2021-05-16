@@ -123,10 +123,27 @@ public class MapView extends View{
         graph=freeGraph();
         if(graph.getV(stop_x, stop_y)==null)
             return;
-        String text=graph.Astar(graph.getV(start_x, start_y), graph.getV(stop_x, stop_y));
+        graph.Astar(graph.getV(start_x, start_y), graph.getV(stop_x, stop_y));
         animationthread = new MapView.async();
         animationthread.execute();
         invalidate();
+    }
+
+    public void drawDepart(Canvas canvas) {
+        super.draw(canvas);
+        for(int i=0;i<graph.vertex.size();i++){
+            paint.setStyle(Paint.Style.FILL);
+            Vertex v = graph.vertex.get(i);
+            if(v.x==start_x&&v.y==start_y){
+                paint.setColor(Color.RED);
+            }
+            else if(v.x==stop_x&&v.y==stop_y){
+                paint.setColor(Color.BLUE);
+            }
+            else {
+                paint.setColor(Color.TRANSPARENT);//si le point n'est ni celui de depart ni celui d'arriver alors on ne l'affiche pas
+            }
+            canvas.drawCircle((float) v.x, (float) v.y, lesRayons, paint);}
     }
 
     public class async extends AsyncTask<Void,Void,Void> {
