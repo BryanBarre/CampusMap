@@ -1,19 +1,14 @@
 package com.example.campusmap;
 
 import android.content.res.Resources;
-import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
-import android.view.ActionMode;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.thuytrinh.android.collageviews.MultiTouchListener;
@@ -23,7 +18,6 @@ public class MapActivity extends AppCompatActivity {
     //taille de map
     float height;
     float width;
-    Canvas canvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +27,14 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_map);
         map = findViewById(R.id.map);
-        View constraintMap = findViewById(R.id.constraintMap);
         setContentView(R.layout.activity_map);
 
-        Spinner batiment = (Spinner) findViewById(R.id.batiment);
-        Spinner etage = (Spinner) findViewById(R.id.etage);
-        Spinner salle = (Spinner) findViewById(R.id.salle);
+        final TextView resultat = findViewById(R.id.resultat);
+        Button astarBtn = findViewById(R.id.astar);
 
-        LinearLayout textLayout = findViewById(R.id.textlayout);
+        map = findViewById(R.id.map);
 
-        final TextView resultat = (TextView) findViewById(R.id.resultat);
-        Button astarBtn = (Button) findViewById(R.id.astar);
-
-        map = (MapView) findViewById(R.id.map);
-
-        findViewById(R.id.map).setOnTouchListener((View.OnTouchListener)
-                new MultiTouchListener());
+        findViewById(R.id.map).setOnTouchListener(new MultiTouchListener());
 
         switch (QrCode) {
             case "Rdc_Code1":
@@ -70,20 +56,14 @@ public class MapActivity extends AppCompatActivity {
                 break;
         }
 
-        astarBtn.setOnClickListener(view -> {
-            drawMap();
-        });
+        astarBtn.setOnClickListener(view -> drawMap());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                drawDepart();
-            }
-        }, 500);
+        handler.postDelayed(this::drawDepart, 500);
     }
 
 
@@ -96,9 +76,9 @@ public class MapActivity extends AppCompatActivity {
 
     public void drawMap(){
         String QrCode = MainActivity.etage;
-        Spinner batiment = (Spinner) findViewById(R.id.batiment);
-        Spinner etage = (Spinner) findViewById(R.id.etage);
-        Spinner salle = (Spinner) findViewById(R.id.salle);
+        Spinner batiment = findViewById(R.id.batiment);
+        Spinner etage = findViewById(R.id.etage);
+        Spinner salle = findViewById(R.id.salle);
 
         switch (QrCode) {
             case "Rdc_Code1":
@@ -197,42 +177,46 @@ public class MapActivity extends AppCompatActivity {
         width = map.getWidth();
         Resources res = getResources();
         map.graph.clear();
-        String[] pointX, pointY, pointName, link;
+        String[] links=new String[]{};
+        String[] points=new String[]{};
+
         //récuperer points du RDC
         if (etage.equals("RDC")) {
-            pointX = res.getStringArray(R.array.RDCpointsX);
-            pointY = res.getStringArray(R.array.RDCpointsY);
-            pointName = res.getStringArray(R.array.RDCname);
-            link = res.getStringArray(R.array.RDClink);
+            Log.d("---------", "");
         }
         //récuperer points de l'etage 1
         else if (etage.equals("ET1")) {
-            pointX = res.getStringArray(R.array.ET1pointsX);
-            pointY = res.getStringArray(R.array.ET1pointsY);
-            pointName = res.getStringArray(R.array.ET1name);
-            link = res.getStringArray(R.array.ET1link);
+            points = res.getStringArray(R.array.et1);
+            links = res.getStringArray(R.array.ET1link);
 
         }
         //récuperer points de l'etage 2
         else {
-            pointX = res.getStringArray(R.array.ET2pointsX);
-            pointY = res.getStringArray(R.array.ET2pointsY);
-            pointName = res.getStringArray(R.array.ET2name);
-            link = res.getStringArray(R.array.ET2link);
+            Log.d("---------", "");
         }
 //scrute le fichier xml et ajoute les points
-        for (int cpt = 0; cpt < pointX.length; cpt++) {
-            x = Float.parseFloat(pointX[cpt]) * (width / 864);
-            y = Float.parseFloat(pointY[cpt]) * (height / 864);
-            name = pointName[cpt];
+        for (String point:points) {
+            Log.d("---------", point);
+            String[] split = point.split(",");
+            name=split[0];
+            x=Integer.parseInt(split[1])*(width/864);
+            y=Integer.parseInt(split[2])*(height / 864);
             map.graph.addVertex(name, x, y);
+            Log.d("---------", name+"/"+x+"\\"+y);
         }
+
 //scrute le fichier xml et ajoute les liaisons entre points
-        for (int cpt = 0; cpt < link.length; cpt += 2) {
-            map.graph.addEdge(link[cpt], link[cpt + 1]);
+  /*      for (int cpt = 0; cpt < link.length; cpt += 2) {
+            //map.graph.addEdge(link[cpt], link[cpt + 1]);
+        }*/
+        for (String link:links){
+            String[] split = link.split(",");
+            Log.d("---------", "edge"+split[0]+","+split[1]);
+            map.graph.addEdge(split[0], split[1]);
         }
 
     }
+
 
 }
 

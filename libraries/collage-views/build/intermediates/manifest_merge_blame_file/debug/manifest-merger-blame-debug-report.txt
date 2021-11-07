@@ -6,11 +6,11 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="14"
-8-->D:\A_Master_SID\TER\CampusCarte\CampusMap6\libraries\collage-views\src\main\AndroidManifest.xml
+8-->C:\Users\hp\Desktop\projet fonctionnel\CampusMap7 xml improved\libraries\collage-views\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="30" />
-9-->D:\A_Master_SID\TER\CampusCarte\CampusMap6\libraries\collage-views\src\main\AndroidManifest.xml
+9-->C:\Users\hp\Desktop\projet fonctionnel\CampusMap7 xml improved\libraries\collage-views\src\main\AndroidManifest.xml
 10
 11    <application />
-11-->D:\A_Master_SID\TER\CampusCarte\CampusMap6\libraries\collage-views\src\main\AndroidManifest.xml:3:5-20
+11-->C:\Users\hp\Desktop\projet fonctionnel\CampusMap7 xml improved\libraries\collage-views\src\main\AndroidManifest.xml:3:5-20
 12
 13</manifest>
